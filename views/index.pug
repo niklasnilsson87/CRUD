@@ -1,0 +1,10 @@
+extends layout.pug
+
+block content
+  section#content
+    if name
+      h2 Welcome, #{name}!
+    else
+      h2 Welcome New User!
+  
+  a(href="/hello") Change username
