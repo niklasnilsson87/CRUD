@@ -60,7 +60,9 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/homeRouter'))
 app.use('/todo', require('./routes/toDoRouter.js'))
 app.use('/login', require('./routes/loginRouter.js'))
+app.use('/register', require('./routes/registerRouter.js'))
 
+// Error handler
 app.use((req, res, next) => {
   res.status(404)
   res.sendFile(path.join(__dirname, 'public', '404.html'))
