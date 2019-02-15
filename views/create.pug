@@ -1,0 +1,33 @@
+extends layout.pug
+
+block content
+  h1
+    span.far.fa-list-alt
+    |  Just To-do It
+
+  table.table.table-striped
+    thead
+      tr
+        th Done
+        th Description
+        th Action
+    tbody
+      //- if locals.toDoItems.length
+      //-   each locals.toDoItems
+      tr
+        td.text-center.text-primary
+          if this.done
+            span.far.fa(class='text-muted')
+            else 
+              span.far.fa(class='square')
+        td.w-100(class='text-muted')
+          if this.done this.description
+        td
+          a(href='/todo/edit/'+this.id)
+            span.far.fa-edit
+          a(href='/todo/delete/'+this.id)
+            span.far.fa-trash-alt
+      else
+      tr
+        td.text-center.text-danger(colspan='3')
+          | No to-do items to display.
