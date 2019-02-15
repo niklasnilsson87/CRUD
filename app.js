@@ -1,13 +1,15 @@
-// mongodb+srv://Niklas:<PASSWORD>@cluster0-qd92s.mongodb.net/test?retryWrites=true
 
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const path = require('path')
 require('dotenv').config()
+const hbs = require('express-hbs')
+const session = require('express-session')
+const logger = require('morgan')
 
 const cookieAuthentication = require('./lib/middleware/cookieAuthentication')
-const routes = require('./routes/')
+const routes = require('./routes/old_js')
 const mongoose = require('./config/mongoose')
 
 const app = express()
@@ -18,14 +20,46 @@ mongoose.connect().catch(error => {
   process.exit(1)
 })
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(cookieParser())
+// view engine setup
+app.engine('hbs', hbs.express4({
+  defaultLayout: path.join(__dirname, 'views', 'layouts', 'default'),
+  partialsDir: path.join(__dirname, 'views', 'partials')
+}))
 
+app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, 'views'))
+
+// additional middleware
+app.use(logger('dev'))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.set('view engine', 'pug')
+// setup and use session middleware (https://github.com/expressjs/session)
+const sessionOptions = {
+  name: 'name of keyboard cat', // Don't use default session cookie name.
+  secret: 'hej det här är roligt', // Change it!!! The secret is used to hash the session with HMAC.
+  resave: false, // Resave even if a request is not changing the session.
+  saveUninitialized: false, // Don't save a created but not modified session.
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 // 1 day
+  }
+}
 
-app.use('/', cookieAuthentication, routes)
+app.use(session(sessionOptions))
+
+// middleware to be executed before the routes
+app.use((req, res, next) => {
+  // flash messages - survives only a round trip
+  res.locals.flash = req.session.flash
+  delete req.session.flash
+
+  next()
+})
+
+// routes
+app.use('/', require('./routes/homeRouter'))
+app.use('/todo', require('./routes/toDoRouter.js'))
+app.use('/login', require('./routes/loginRouter.js'))
 
 app.use((req, res, next) => {
   res.status(404)
