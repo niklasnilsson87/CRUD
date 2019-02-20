@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Just To-do It!</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
       aria-expanded="false" aria-label="Toggle navigation">
@@ -13,9 +13,6 @@
         <li class="nav-item">
           <a class="nav-link" href="/todo/">List</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/todo/create">Create</a>
-        </li>
         {{#unless username.length}}
         <li class="nav-item">
           <a class="nav-link" href="/login">Login</a>
@@ -25,6 +22,9 @@
         </li>
         {{/unless}}
       {{#if username.length}}
+       <li class="nav-item">
+          <a class="nav-link" href="/todo/create">Create</a>
+        </li>
         <li class="nav-item">
           <form method="post" action="/logout">
             <button type="submit" class="nav-link logout-btn">Logout</button>

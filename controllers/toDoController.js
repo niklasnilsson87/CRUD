@@ -14,7 +14,8 @@ toDoController.index = async (req, res, next) => {
         .map(toDoItem => ({
           id: toDoItem._id,
           description: toDoItem.description,
-          done: toDoItem.done
+          done: toDoItem.done,
+          author: toDoItem.author
         }))
     }
     res.render('todo/index', { locals })
@@ -41,7 +42,8 @@ toDoController.createPost = async (req, res, next) => {
   try {
     const toDoItem = new ToDoItem({
       description: req.body.description,
-      done: req.body.done
+      done: req.body.done,
+      author: req.session.username
     })
 
     await toDoItem.save()
@@ -60,12 +62,17 @@ toDoController.createPost = async (req, res, next) => {
 toDoController.edit = async (req, res, next) => {
   try {
     const toDoItem = await ToDoItem.findOne({ _id: req.params.id })
-    const locals = {
-      id: toDoItem._id,
-      description: toDoItem.description,
-      done: toDoItem.done
+    if (toDoItem.author === req.session.username) {
+      const locals = {
+        id: toDoItem._id,
+        description: toDoItem.description,
+        done: toDoItem.done
+      }
+      res.render('todo/edit', { locals })
+    } else {
+      req.session.flash = { type: 'danger', text: 'Only author can change snippet' }
+      res.redirect('/todo')
     }
-    res.render('todo/edit', { locals })
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('.')
@@ -103,12 +110,17 @@ toDoController.editPost = async (req, res, next) => {
 toDoController.delete = async (req, res, next) => {
   try {
     const toDoItem = await ToDoItem.findOne({ _id: req.params.id })
-    const locals = {
-      id: toDoItem._id,
-      description: toDoItem.description,
-      done: toDoItem.done
+    if (toDoItem.author === req.session.username) {
+      const locals = {
+        id: toDoItem._id,
+        description: toDoItem.description,
+        done: toDoItem.done
+      }
+      res.render('todo/delete', { locals })
+    } else {
+      req.session.flash = { type: 'danger', text: 'Only author can delete snippet' }
+      res.redirect('/todo')
     }
-    res.render('todo/delete', { locals })
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
     res.redirect('.')

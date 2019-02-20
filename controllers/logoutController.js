@@ -10,7 +10,7 @@ logoutController.logout = (req, res, next) => {
     if (error) {
       console.log(error)
     } else {
-      res.clearCookie('scrud')
+      res.clearCookie('zlatan')
       res.redirect('/')
       console.log('loggar ut')
     }

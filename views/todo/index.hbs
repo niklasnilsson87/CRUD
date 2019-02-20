@@ -12,14 +12,17 @@
         </tr>
     </thead>
     <tbody>
+
         {{#if locals.toDoItems.length }}
         {{#each locals.toDoItems}}
         <tr>
-            <td class="text-center text-primary"><span class="far fa-{{#if this.done }}check-square{{else}}square{{/if}}"></span></td>
-            <td class="w-100 {{#if this.done }} text-muted {{/if}}">{{this.description}}</td>
+            <td class="text-center text-primary"><span class="far fa-{{#if done }}check-square{{else}}square{{/if}}"></span></td>
+            <td class="w-100 {{#if done }} text-muted {{/if}}">{{description}}</td>
             <td>
-                <a href="/todo/edit/{{this.id}}"><span class="far fa-edit"></span></a>
-                <a href="/todo/delete/{{this.id}}"><span class="far fa-trash-alt"></span></a>
+               
+                <a href="/todo/edit/{{id}}"><span class="far fa-edit"></span></a>
+                <a href="/todo/delete/{{id}}"><span class="far fa-trash-alt"></span></a>
+
             </td>
         </tr>
         {{/each}}
@@ -30,5 +33,6 @@
             </td>
         </tr>
         {{/if}}
+ 
     </tbody>
 </table>

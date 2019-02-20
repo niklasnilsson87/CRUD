@@ -16,13 +16,12 @@ loginController.loginUser = async (req, res) => {
     let sess = req.session
     sess.username = req.body.username
     sess.id = req.sessionID
+
     await sess.save()
-    res.render('home/index', { username: req.body.username })
+    req.session.flash = { type: 'success', text: 'login was successfull.' }
+    res.redirect('.')
   } else {
     res.render('home/index')
   }
-  let sess = req.session
-  sess.username = req.body.username
-  sess.id = req.sessionID
 }
 module.exports = loginController

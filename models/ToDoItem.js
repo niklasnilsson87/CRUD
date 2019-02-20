@@ -18,6 +18,12 @@ const toDoItemSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false
+  },
+  userID: {
+    type: String
+  },
+  author: {
+    type: String
   }
 })
 
