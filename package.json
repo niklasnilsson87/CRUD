@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/1dv023/nn222ia-examination-2#readme",
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",

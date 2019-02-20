@@ -49,6 +49,14 @@ app.use(session(sessionOptions))
 
 // middleware to be executed before the routes
 app.use((req, res, next) => {
+  if (req.session && req.session.username) {
+    res.session = { username: req.session.username }
+    res.locals.username = req.session.username
+  }
+  next()
+})
+
+app.use((req, res, next) => {
   // flash messages - survives only a round trip
   res.locals.flash = req.session.flash
   delete req.session.flash
@@ -61,6 +69,7 @@ app.use('/', require('./routes/homeRouter'))
 app.use('/todo', require('./routes/toDoRouter.js'))
 app.use('/login', require('./routes/loginRouter.js'))
 app.use('/register', require('./routes/registerRouter.js'))
+app.use('/logout', require('./routes/logoutRouter.js'))
 
 // Error handler
 app.use((req, res, next) => {

@@ -1,24 +1,31 @@
 let mongoose = require('mongoose')
-var crypto = require('crypto')
+mongoose.set('useCreateIndex', true)
+// var crypto = require('crypto')
+const bcrypt = require('bcrypt')
 
 var UserSchema = new mongoose.Schema({
-  username: { type: String, lowercase: true, required: true, match: [/^[a-zA-Z0-9]+$/, 'is invalid'] },
-  email: { type: String, lowercase: true, required: true, match: [/\S+@\S+\.\S+/, 'is invalid'] },
-  bio: String,
-  image: String,
-  hash: String,
-  salt: String
-}, { timestamps: true })
+  username: { type: String, required: true, index: { unique: true } },
+  password: { type: String, required: true },
+  email: { type: String, required: true }
+})
 
-UserSchema.methods.setPassword = (password) => {
-  this.salt = crypto.randomBytes(16).toString('hex')
-  this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex')
+UserSchema.path('password').validate((password) => { return password.length >= 6 },
+  'The password must be of minimum length 6 characters.')
+
+UserSchema.pre('save', async function (next) {
+  let user = this
+
+  if (user.isModified('password') || user.isNew) {
+    let hashPwd = await bcrypt.hash(user.password, 12)
+    user.password = hashPwd
+  }
+  next()
+})
+
+UserSchema.methods.comparePassword = function (candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password)
 }
 
-UserSchema.methods.validPassword = (password) => {
-  let hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex')
-  return this.hash === hash
-}
 const User = mongoose.model('User', UserSchema)
 
 module.exports = User

@@ -15,10 +15,10 @@ registerController.registerUser = async (req, res) => {
     await newUser.save()
 
     req.session.flash = { type: 'success', text: 'To-do item was created successfully.' }
-    res.redirect('.')
+    res.redirect('/login')
   } catch (error) {
     req.session.flash = { type: 'danger', text: error.message }
-    res.redirect('./create')
+    res.redirect('./login')
   }
 }
 
