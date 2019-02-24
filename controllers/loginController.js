@@ -21,7 +21,8 @@ loginController.loginUser = async (req, res) => {
     req.session.flash = { type: 'success', text: 'login was successfull.' }
     res.redirect('.')
   } else {
-    res.render('home/index')
+    req.session.flash = { type: 'danger', text: 'login failed check username & password' }
+    res.render('login/index')
   }
 }
 module.exports = loginController
