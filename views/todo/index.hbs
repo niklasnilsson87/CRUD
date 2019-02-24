@@ -19,10 +19,10 @@
             <td class="text-center text-primary"><span class="far fa-{{#if done }}check-square{{else}}square{{/if}}"></span></td>
             <td class="w-100 {{#if done }} text-muted {{/if}}">{{description}}</td>
             <td>
-               
+                {{#if this.owner}}
                 <a href="/todo/edit/{{id}}"><span class="far fa-edit"></span></a>
                 <a href="/todo/delete/{{id}}"><span class="far fa-trash-alt"></span></a>
-
+                {{/if}}
             </td>
         </tr>
         {{/each}}

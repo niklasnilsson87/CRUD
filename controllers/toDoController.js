@@ -15,7 +15,8 @@ toDoController.index = async (req, res, next) => {
           id: toDoItem._id,
           description: toDoItem.description,
           done: toDoItem.done,
-          author: toDoItem.author
+          author: toDoItem.author,
+          owner: toDoItem.author === req.session.username
         }))
     }
     res.render('todo/index', { locals })

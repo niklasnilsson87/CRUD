@@ -1,6 +1,5 @@
 let mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true)
-// var crypto = require('crypto')
 const bcrypt = require('bcrypt')
 
 var UserSchema = new mongoose.Schema({

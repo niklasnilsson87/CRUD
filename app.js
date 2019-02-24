@@ -1,7 +1,6 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
 const path = require('path')
 require('dotenv').config()
 const hbs = require('express-hbs')
@@ -9,7 +8,7 @@ const session = require('express-session')
 const logger = require('morgan')
 
 const middlewereHome = require('./lib/middleware/middlewares')
-const routes = require('./routes/old_js')
+
 const mongoose = require('./config/mongoose')
 
 const app = express()
@@ -73,14 +72,20 @@ app.use('/register', middlewereHome.redirectHome, require('./routes/registerRout
 app.use('/logout', require('./routes/logoutRouter.js'))
 
 // Error handler
+
 app.use((req, res, next) => {
   res.status(404)
   res.sendFile(path.join(__dirname, 'public', '404.html'))
 })
 
 app.use((err, req, res, next) => {
-  res.status(err.status || 500)
-  res.send(err.message || 'internal Server Error')
+  if (err.message === '403') {
+    res.status(403)
+    res.sendFile(path.join(__dirname, 'public', '403.html'))
+  } else {
+    res.status(err.status || 500)
+    res.send(err.message || 'internal Server Error')
+  }
 })
 
 app.listen(3000, () => console.log('listening on port 3000....'))
