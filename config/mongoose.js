@@ -1,5 +1,9 @@
-
-'use strict'
+/**
+ * Moongoose module.
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
 
 const mongoose = require('mongoose')
 

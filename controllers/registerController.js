@@ -1,9 +1,22 @@
+/**
+ * Module for logoutController
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
+
 const User = require('../models/User')
 
 const registerController = {}
 
+/**
+ * register GET
+ */
 registerController.register = (req, res, next) => res.render('register/index')
 
+/**
+ * registerUser POST
+ */
 registerController.registerUser = async (req, res) => {
   try {
     const newUser = new User({
@@ -22,4 +35,5 @@ registerController.registerUser = async (req, res) => {
   }
 }
 
+// Exports
 module.exports = registerController

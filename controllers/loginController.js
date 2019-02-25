@@ -1,10 +1,22 @@
+/**
+ * Module for loginController
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
 
 const User = require('../models/User')
 
 const loginController = {}
 
+/**
+ * index GET
+ */
 loginController.login = (req, res, next) => res.render('login/index')
 
+/**
+ * loginUser POST
+ */
 loginController.loginUser = async (req, res) => {
   let user = await User.findOne({ username: req.body.username })
   if (!user) {
@@ -13,6 +25,7 @@ loginController.loginUser = async (req, res) => {
     res.redirect('./login')
   }
 
+  // Checks if password match with DB
   let result = await user.comparePassword(req.body.password)
   if (result && user) {
     let sess = req.session
@@ -27,4 +40,6 @@ loginController.loginUser = async (req, res) => {
     res.redirect('./login')
   }
 }
+
+// Exports
 module.exports = loginController

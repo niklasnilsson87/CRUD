@@ -1,4 +1,9 @@
-'use strict'
+/**
+ * Module for toDoController
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
 
 const ToDoItem = require('../models/ToDoItem')
 

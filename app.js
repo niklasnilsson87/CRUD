@@ -1,3 +1,9 @@
+/**
+ * The starting point of the application.
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -8,7 +14,6 @@ const session = require('express-session')
 const logger = require('morgan')
 
 const middlewereHome = require('./lib/middleware/middlewares')
-
 const mongoose = require('./config/mongoose')
 
 const app = express()
@@ -19,26 +24,27 @@ mongoose.connect().catch(error => {
   process.exit(1)
 })
 
-// view engine setup
+// Configure rendering engine, with change extension to .hbs.
 app.engine('hbs', hbs.express4({
   defaultLayout: path.join(__dirname, 'views', 'layouts', 'default'),
   partialsDir: path.join(__dirname, 'views', 'partials')
 }))
 
+// Setup view engine.
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// additional middleware
+// additional middleware for logger and bodyparser
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
-// setup and use session middleware (https://github.com/expressjs/session)
+// Setup session store with the given options.
 const sessionOptions = {
-  name: 'zlatan', // Don't use default session cookie name.s
-  secret: 'hej det här är roligt', // Change it!!! The secret is used to hash the session with HMAC.
-  resave: false, // Resave even if a request is not changing the session.
-  saveUninitialized: false, // Don't save a created but not modified session.
+  name: 'zlatan',
+  secret: 'hej det här är roligt',
+  resave: false,
+  saveUninitialized: false,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 1 day
     sameSite: 'lax'
@@ -48,6 +54,7 @@ const sessionOptions = {
 app.use(session(sessionOptions))
 
 // middleware to be executed before the routes
+// saves the session to locals object
 app.use((req, res, next) => {
   if (req.session && req.session.username) {
     res.session = { username: req.session.username }
@@ -56,8 +63,8 @@ app.use((req, res, next) => {
   next()
 })
 
+// flash messages - survives only a round trip
 app.use((req, res, next) => {
-  // flash messages - survives only a round trip
   res.locals.flash = req.session.flash
   delete req.session.flash
 
@@ -72,7 +79,6 @@ app.use('/register', middlewereHome.redirectHome, require('./routes/registerRout
 app.use('/logout', require('./routes/logoutRouter.js'))
 
 // Error handler
-
 app.use((req, res, next) => {
   res.status(404)
   res.sendFile(path.join(__dirname, 'public', '404.html'))
@@ -88,4 +94,5 @@ app.use((err, req, res, next) => {
   }
 })
 
+// Start listening.
 app.listen(3000, () => console.log('listening on port 3000....'))

@@ -1,4 +1,9 @@
-'use strict'
+/**
+ * Mongoose model UserSchema
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
 
 const mongoose = require('mongoose')
 
@@ -27,6 +32,8 @@ const toDoItemSchema = new mongoose.Schema({
   }
 })
 
+// Creates model
 const ToDoItem = mongoose.model('ToDoItem', toDoItemSchema)
 
+// Exports
 module.exports = ToDoItem

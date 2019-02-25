@@ -1,4 +1,9 @@
-'use strict'
+/**
+ * Module for homeController
+ *
+ * @author Niklas Nilsson
+ * @version 1.0
+ */
 
 const homeController = {}
 
