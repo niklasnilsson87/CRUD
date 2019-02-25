@@ -9,6 +9,8 @@ loginController.loginUser = async (req, res) => {
   let user = await User.findOne({ username: req.body.username })
   if (!user) {
     console.log('no user')
+    req.session.flash = { type: 'danger', text: 'login failed check username & password' }
+    res.redirect('./login')
   }
 
   let result = await user.comparePassword(req.body.password)
@@ -22,7 +24,7 @@ loginController.loginUser = async (req, res) => {
     res.redirect('.')
   } else {
     req.session.flash = { type: 'danger', text: 'login failed check username & password' }
-    res.render('login/index')
+    res.redirect('./login')
   }
 }
 module.exports = loginController

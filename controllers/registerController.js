@@ -17,7 +17,7 @@ registerController.registerUser = async (req, res) => {
     req.session.flash = { type: 'success', text: 'To-do item was created successfully.' }
     res.redirect('/login')
   } catch (error) {
-    req.session.flash = { type: 'danger', text: error.message }
+    req.session.flash = { type: 'danger', text: 'Username already exist' }
     res.redirect('./login')
   }
 }

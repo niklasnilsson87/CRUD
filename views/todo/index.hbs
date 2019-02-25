@@ -1,6 +1,6 @@
 
 <h1>
-    <span class="far fa-list-alt"></span> Strings
+    <span class="far fa-list-alt"></span> Snippets
 </h1>
 
 <table class="table table-striped">
@@ -17,11 +17,15 @@
         {{#each locals.toDoItems}}
         <tr>
             <td class="text-center text-primary"><span class="far fa-{{#if done }}check-square{{else}}square{{/if}}"></span></td>
-            <td class="w-100 {{#if done }} text-muted {{/if}}">{{description}}</td>
+             
+            <td class="w-100 white-space {{#if done }} text-muted {{/if}}"><div class="scrollbar">{{description}}</div></td>
+        
             <td>
                 {{#if this.owner}}
+               
                 <a href="/todo/edit/{{id}}"><span class="far fa-edit"></span></a>
                 <a href="/todo/delete/{{id}}"><span class="far fa-trash-alt"></span></a>
+            
                 {{/if}}
             </td>
         </tr>
@@ -29,7 +33,7 @@
         {{else}}
         <tr>
             <td colspan="3" class="text-center text-danger">
-                No to-do items to display.
+                No snippets to display.
             </td>
         </tr>
         {{/if}}

@@ -43,10 +43,6 @@ body {
 }
 
 
-
-Collapse 
-/* Floating labels styles
--------------------------------------------------- * /
 :root {
   --input-padding-x: .75rem;
   --input-padding-y: .75rem;
@@ -68,7 +64,7 @@ Collapse 
   left: 0;
   display: block;
   width: 100%;
-  margin-bottom: 0; /* Override default `<label>` margin * /
+  margin-bottom: 0;
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
@@ -107,7 +103,7 @@ Collapse 
   font-size: 12px;
   color: #777;
 }
-*/
+
 
 /* Custom page CSS
 -------------------------------------------------- */
@@ -128,4 +124,13 @@ code {
 
 .card-text {
   font-family: 'Consolas', 'Courier New', Courier, monospace
+}
+
+.scrollbar {
+  overflow-y: scroll;
+  max-height: 100px;
+}
+
+.white-space {
+  white-space: pre;
 }

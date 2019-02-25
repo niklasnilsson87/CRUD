@@ -3,7 +3,7 @@ mongoose.set('useCreateIndex', true)
 const bcrypt = require('bcrypt')
 
 var UserSchema = new mongoose.Schema({
-  username: { type: String, required: true, index: { unique: true } },
+  username: { type: String, required: true, lowercase: true, index: { unique: true } },
   password: { type: String, required: true },
   email: { type: String, required: true }
 })
