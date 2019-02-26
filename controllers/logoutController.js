@@ -17,7 +17,6 @@ logoutController.logout = (req, res, next) => {
     } else {
       res.clearCookie('zlatan')
       res.redirect('/')
-      console.log('loggar ut')
     }
   })
 }

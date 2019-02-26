@@ -7,7 +7,7 @@
 
 const mongoose = require('mongoose')
 
-const toDoItemSchema = new mongoose.Schema({
+const snippetSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
@@ -33,7 +33,7 @@ const toDoItemSchema = new mongoose.Schema({
 })
 
 // Creates model
-const ToDoItem = mongoose.model('ToDoItem', toDoItemSchema)
+const SnippetItem = mongoose.model('SnippetItem', snippetSchema)
 
 // Exports
-module.exports = ToDoItem
+module.exports = SnippetItem

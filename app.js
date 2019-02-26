@@ -73,7 +73,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/', require('./routes/homeRouter'))
-app.use('/todo', require('./routes/toDoRouter.js'))
+app.use('/snippets', require('./routes/snippetsRouter.js'))
 app.use('/login', middlewereHome.redirectHome, require('./routes/loginRouter.js'))
 app.use('/register', middlewereHome.redirectHome, require('./routes/registerRouter.js'))
 app.use('/logout', require('./routes/logoutRouter.js'))

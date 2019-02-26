@@ -6,15 +6,15 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Done</th>
+            <th>Edited</th>
             <th>Description</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
 
-        {{#if locals.toDoItems.length }}
-        {{#each locals.toDoItems}}
+        {{#if locals.snippetItems.length }}
+        {{#each locals.snippetItems}}
         <tr>
             <td class="text-center text-primary"><span class="far fa-{{#if done }}check-square{{else}}square{{/if}}"></span></td>
              
@@ -23,8 +23,8 @@
             <td>
                 {{#if this.owner}}
                
-                <a href="/todo/edit/{{id}}"><span class="far fa-edit"></span></a>
-                <a href="/todo/delete/{{id}}"><span class="far fa-trash-alt"></span></a>
+                <a href="/snippets/edit/{{id}}"><span class="far fa-edit"></span></a>
+                <a href="/snippets/delete/{{id}}"><span class="far fa-trash-alt"></span></a>
             
                 {{/if}}
             </td>

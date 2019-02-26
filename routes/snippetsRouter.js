@@ -1,5 +1,5 @@
 /**
- * toDoRouter routes.
+ * snippetsRouter routes.
  *
  * @author Niklas Nilsson
  * @version 1.0
@@ -8,7 +8,7 @@
 const express = require('express')
 const router = express.Router()
 
-const controller = require('../controllers/toDoController')
+const controller = require('../controllers/snippetsController')
 const user = require('../lib/middleware/middlewares')
 
 // GET /
