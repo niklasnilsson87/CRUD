@@ -12,11 +12,14 @@ require('dotenv').config()
 const hbs = require('express-hbs')
 const session = require('express-session')
 const logger = require('morgan')
+const helmet = require('helmet')
 
 const middlewereHome = require('./lib/middleware/middlewares')
 const mongoose = require('./config/mongoose')
 
 const app = express()
+
+app.use(helmet())
 
 // connect to the database
 mongoose.connect().catch(error => {
